@@ -1,3 +1,4 @@
+import org.innercircle.saecipher.SAECipher;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.Cipher;
@@ -15,17 +16,32 @@ public class CipherTest {
 
 
     @Test
-    public void cipherTest() throws NoSuchPaddingException, NoSuchAlgorithmException {
+    public void cipherAESTest() throws NoSuchPaddingException, NoSuchAlgorithmException {
         //
         Cipher cipher = Cipher.getInstance("AES");
-        String myKey = SAECipher.getKey(SAECipher.TYPE_AES_256);
+        SAECipher.SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_AES_256);
         String plainText = "plainText";
         String encrypted = SAECipher.encrypt(SAECipher.TYPE_AES_256, myKey, plainText);
-        String decrypted = SAECipher.decrypt(SAECipher.TYPE_AES_256, myKey, plainText);
-        //
-        SAECipher sc2 = SAECipher.getInstance(SAECipher.TYPE_AES);
-        sc2.setKey(myKey);
-        String decrypted = sc.decrypt(encrypted);
+        String decrypted = SAECipher.decrypt(SAECipher.TYPE_AES_256, myKey, encrypted);
     }
 
+
+
+    @Test
+    public void cipherRSATest() throws NoSuchPaddingException, NoSuchAlgorithmException {
+        //
+        SAECipher.SAECipherKey myKeyPair = SAECipher.generateKey(SAECipher.TYPE_RSA_2048);
+        String plainText = "plainText";
+        String encrypted = SAECipher.encrypt(SAECipher.TYPE_RSA_2048, myKeyPair.getPublicKey(), plainText);
+        String decrypted = SAECipher.decrypt(SAECipher.TYPE_RSA_2048, myKeyPair.getSecretKey(), encrypted);
+    }
+
+
+    @Test
+    public void cipherHelpTest() throws NoSuchPaddingException, NoSuchAlgorithmException {
+        //
+        String[] strings = {"hello", "world"};
+        String first = strings[0];
+        String second = strings[1];
+    }
 }
