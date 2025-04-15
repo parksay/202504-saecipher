@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import javax.crypto.NoSuchPaddingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Logger;
 
 public class CipherTest {
 
+    private static final Logger logger = Logger.getLogger(CipherTest.class.getName());
 
     @Test
     public void runTest() {
-        System.out.println("hello");
+        logger.info("hello");
         return;
     }
 
@@ -22,11 +24,11 @@ public class CipherTest {
         SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_AES_256);
         String plainText = "plainText";
         String encrypted = SAECipher.encrypt(SAECipher.TYPE_AES_256, myKey, plainText);
-        System.out.println("encrypted ====== ");
-        System.out.println(encrypted);
+        logger.info("encrypted ====== ");
+        logger.info(encrypted);
         String decrypted = SAECipher.decrypt(SAECipher.TYPE_AES_256, myKey, encrypted);
-        System.out.println("decrypted ====== ");
-        System.out.println(decrypted);
+        logger.info("decrypted ====== ");
+        logger.info(decrypted);
         //
         Assertions.assertNotEquals(plainText, encrypted);
         Assertions.assertTrue(plainText.length() < encrypted.length());
@@ -41,11 +43,11 @@ public class CipherTest {
         SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_RSA_2048);
         String plainText = "plainText";
         String encrypted = SAECipher.encrypt(SAECipher.TYPE_RSA_2048, myKey, plainText);
-        System.out.println("encrypted ========== ");
-        System.out.println(encrypted);
+        logger.info("encrypted ========== ");
+        logger.info(encrypted);
         String decrypted = SAECipher.decrypt(SAECipher.TYPE_RSA_2048, myKey, encrypted);
-        System.out.println("decrypted ========== ");
-        System.out.println(decrypted);
+        logger.info("decrypted ========== ");
+        logger.info(decrypted);
         //
         Assertions.assertNotEquals(plainText, encrypted);
         Assertions.assertTrue(plainText.length() < encrypted.length());
@@ -58,8 +60,7 @@ public class CipherTest {
         String plainText = "plainText";
         String signed = SAECipher.sign(myKey, plainText);
         boolean isVerified = SAECipher.verify(myKey, plainText, signed);
-        System.out.println("isVerified ========== ");
-        System.out.println(isVerified);
+        logger.info("isVerified ========== " + isVerified);
         Assertions.assertTrue(isVerified);
     }
 

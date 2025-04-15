@@ -4,11 +4,14 @@ package org.innercircle.saecipher;
 import javax.crypto.*;
 import java.security.*;
 import java.util.Base64;
+import java.util.logging.Logger;
 
 public class SAECipher {
 
     public static final int TYPE_AES_256 = 1;
     public static final int TYPE_RSA_2048 = 2;
+
+    private static final Logger logger = Logger.getLogger(SAECipher.class.getName());
 
     public static SAECipherKey generateKey(int citype) {
         try {
@@ -30,7 +33,7 @@ public class SAECipher {
                     publicKey = keyPair.getPublic();
                     break;
                 default:
-                    System.out.println("citype = " + citype);
+                    logger.info("citype = " + citype);
                     break;
                 }
             SAECipherKey saeCipherKey = new SAECipherKey(secretKey, publicKey, privateKey);
@@ -52,7 +55,7 @@ public class SAECipher {
                 encrypted = encryptRsa(TYPE_RSA_2048, key, plainText);
                 break;
             default:
-                System.out.println("citype = " + citype);
+                logger.info("citype = " + citype);
                 break;
         }
         return encrypted;
@@ -65,8 +68,8 @@ public class SAECipher {
             byte[] plainBytes = plainText.getBytes();
             byte[] encryptedBytes = cipher.doFinal(plainBytes);
             String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
-            System.out.println("encryptedText ::: ");
-            System.out.println(encryptedText);
+            logger.info("encryptedText ::: ");
+            logger.info(encryptedText);
             return encryptedText;
         } catch (NoSuchPaddingException e) {
             throw new RuntimeException(e);
@@ -88,8 +91,8 @@ public class SAECipher {
             byte[] plainBytes = plainText.getBytes();
             byte[] encryptedBytes = cipher.doFinal(plainBytes);
             String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes);
-            System.out.println("encrypte >>>>>>>>>" );
-            System.out.println(encryptedText);
+            logger.info("encrypte >>>>>>>>>" );
+            logger.info(encryptedText);
             return encryptedText;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -115,7 +118,7 @@ public class SAECipher {
                 decrypted = decryptRsa(TYPE_RSA_2048, key, encryptedText);
                 break;
             default:
-                System.out.println("citype = " + citype);
+                logger.info("citype = " + citype);
                 break;
         }
         return decrypted;
@@ -127,8 +130,8 @@ public class SAECipher {
             byte[] encryptedBytes = Base64.getDecoder().decode(encrypted);
             byte[] plainBytes = cipher.doFinal(encryptedBytes);
             String plainText = new String(plainBytes);
-            System.out.println("decrypted >>>>>>> ");
-            System.out.println(plainText);
+            logger.info("decrypted >>>>>>> ");
+            logger.info(plainText);
             return plainText;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -150,8 +153,8 @@ public class SAECipher {
             byte[] encryptedBytes = Base64.getDecoder().decode(encrypted);
             byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
             String decryptedText = new String(decryptedBytes);
-            System.out.println("decrypted >>>>>>> ");
-            System.out.println(decryptedText);
+            logger.info("decrypted >>>>>>> ");
+            logger.info(decryptedText);
             return decryptedText;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -173,8 +176,7 @@ public class SAECipher {
             signature.update(msg.getBytes());
             byte[] signedBytes = signature.sign();
             String signedText = Base64.getEncoder().encodeToString(signedBytes);
-            System.out.println("signedBytes === ");
-            System.out.println(signedBytes.length);
+            logger.info("signedBytes === "+ signedBytes.length);
 
             return signedText;
         } catch (NoSuchAlgorithmException e) {
@@ -195,10 +197,9 @@ public class SAECipher {
             verifier.initVerify(myKey.getPublicKey());
             verifier.update(msgBytes);
             boolean isVerified = verifier.verify(signedBytes);
-            System.out.println("signedText == ");
-            System.out.println(signedText);
-            System.out.println("signedBytes == ");
-            System.out.println(signedBytes.length);
+            logger.info("signedText == ");
+            logger.info(signedText);
+            logger.info("signedBytes == " + signedBytes.length);
             return isVerified;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
