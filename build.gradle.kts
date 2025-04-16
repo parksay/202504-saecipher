@@ -1,9 +1,15 @@
 plugins {
     id("java")
+    `java-library`                // Java 라이브러리 플러그인 추가
+    `maven-publish`               // JitPack 배포를 위한 플러그인
 }
 
-group = "org.innercircle"
-version = "1.0-SNAPSHOT"
+group = "org.innercircle.parksay"
+version = "0.0.1"
+
+java {
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
@@ -17,3 +23,14 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+
+//publishing {
+//    publications {
+//        create<MavenPublication>("mavenJava") {
+//            from(components["java"])
+//        }
+//    }
+//}
+
+

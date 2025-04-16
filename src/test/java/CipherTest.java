@@ -3,8 +3,12 @@ import org.innercircle.saecipher.SAECipherKey;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.logging.Logger;
 
 public class CipherTest {
@@ -19,7 +23,7 @@ public class CipherTest {
 
 
     @Test
-    public void aesTest() {
+    public void aesTest() throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         //
         SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_AES_256);
         String plainText = "plainText";
@@ -38,7 +42,7 @@ public class CipherTest {
 
 
     @Test
-    public void rsaTest(){
+    public void rsaTest() throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         //
         SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_RSA_2048);
         String plainText = "plainText";
@@ -55,7 +59,7 @@ public class CipherTest {
     }
 
     @Test
-    public void signTest() {
+    public void signTest() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         SAECipherKey myKey = SAECipher.generateKey(SAECipher.TYPE_RSA_2048);
         String plainText = "plainText";
         String signed = SAECipher.sign(myKey, plainText);
