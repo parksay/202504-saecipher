@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.innercircle.parksay"
-version = "0.0.1"
+version = "0.0.3"
 
 java {
     withSourcesJar()
