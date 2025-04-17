@@ -1,7 +1,5 @@
-package org.innercircle;
+package org.innercircle.saecipher;
 
-
-import org.innercircle.parksay.SAECipherKey;
 
 import javax.crypto.*;
 import java.security.*;

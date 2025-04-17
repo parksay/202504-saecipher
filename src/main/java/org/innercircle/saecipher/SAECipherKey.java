@@ -1,4 +1,4 @@
-package org.innercircle.parksay;
+package org.innercircle.saecipher;
 
 import javax.crypto.SecretKey;
 import java.security.PrivateKey;
