@@ -1,4 +1,4 @@
-import org.innercircle.parksay.SAECipher;
+import org.innercircle.SAECipher;
 import org.innercircle.parksay.SAECipherKey;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
