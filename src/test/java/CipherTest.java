@@ -16,7 +16,6 @@ public class CipherTest {
     @Test
     public void runTest() {
         logger.info("hello");
-        return;
     }
 
 
